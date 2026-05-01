@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FAF9F6;
+  --foreground: #3D2B1F;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  @apply antialiased;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* в”Ђв”Ђ Animations в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ */
+@keyframes float {
+  0%, 100% { transform: translateY(-8px) rotate(0deg); }
+  50%       { transform: translateY(8px) rotate(3deg); }
+}
+
+@keyframes float-alt {
+  0%, 100% { transform: translate(8px, 8px); }
+  50%       { transform: translate(-4px, -6px); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.05); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float      { animation: float      7s ease-in-out infinite; }
+.animate-float-alt  { animation: float-alt  9s ease-in-out infinite; }
+.animate-pulse-slow { animation: pulse-slow 8s ease-in-out infinite; }
+.animate-fade-up    { animation: fade-up    1s cubic-bezier(0.22,1,0.36,1) both; }
+
