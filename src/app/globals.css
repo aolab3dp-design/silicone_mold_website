@@ -48,3 +48,11 @@ html {
 .animate-pulse-slow { animation: pulse-slow 8s ease-in-out infinite; }
 .animate-fade-up    { animation: fade-up    1s cubic-bezier(0.22,1,0.36,1) both; }
 
+/* ── Hide scrollbar but keep scroll ─────────────────────────── */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome/Safari/Opera */
+}

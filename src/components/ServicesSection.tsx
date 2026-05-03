@@ -15,7 +15,7 @@ export default function ServicesSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="services" className="py-20 lg:py-24 bg-[#F5F4F1]/50">
+    <section id="services" className="py-20 lg:py-24 bg-[#FAF9F6]">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="text-center mb-20">
           <p className="text-xs font-medium tracking-[0.2em] text-[#3D2B1F]/80 uppercase mb-6">НАШИ КОМПЕТЕНЦИИ</p>
@@ -32,7 +32,7 @@ export default function ServicesSection() {
                   const Icon = service.icon;
                   return (
                     <TabsTrigger key={service.id} value={service.id}
-                      className="rounded-full bg-transparent px-5 py-2.5 text-sm font-medium text-[#3D2B1F]/70 data-[state=active]:text-[#A34343] data-[state=active]:font-semibold hover:text-[#3D2B1F] transition-all duration-300 flex items-center gap-2 data-[state=active]:bg-transparent data-[state=active]:shadow-none">
+                      className="rounded-full bg-transparent px-5 py-2.5 text-sm font-medium text-[#3D2B1F]/70 data-[state=active]:text-[#A34343] data-[state=active]:font-semibold hover:text-[#3D2B1F] transition-all duration-300 flex items-center gap-2 data-[state=active]:bg-transparent data-[state=active]:shadow-none cursor-pointer">
                       <Icon strokeWidth={1.5} className="w-4 h-4" />
                       <span className="hidden sm:inline">{service.title}</span>
                     </TabsTrigger>

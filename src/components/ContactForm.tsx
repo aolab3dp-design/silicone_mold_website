@@ -5,12 +5,41 @@ import { supabase } from '@/lib/supabaseClient';
 import { Send, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({ name: '', contact: '', description: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', description: '' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Автоматическое форматирование: +7 (XXX) XXX XXXX
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+
+    // Вычисляем только цифры из введённого текста
+    const digits = input.replace(/\D/g, '');
+
+    // Берём не более 11 цифр
+    const limited = digits.slice(0, 11);
+
+    // Форматируем по маске +7 (XXX) XXX XXXX
+    let formatted = '';
+    if (limited.length === 0) {
+      formatted = '';
+    } else {
+      // Первая цифра всегда 7
+      const d = limited.startsWith('7') ? limited : '7' + limited.slice(limited.startsWith('8') ? 1 : 0);
+      const trimmed = d.slice(0, 11);
+
+      formatted = '+7';
+      if (trimmed.length > 1) formatted += ' (' + trimmed.slice(1, 4);
+      if (trimmed.length >= 4) formatted += ')';
+      if (trimmed.length > 4) formatted += ' ' + trimmed.slice(4, 7);
+      if (trimmed.length > 7) formatted += ' ' + trimmed.slice(7, 11);
+    }
+
+    setFormData({ ...formData, phone: formatted });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -23,14 +52,14 @@ export default function ContactForm() {
         .from('leads')
         .insert([{
           name: formData.name,
-          contact: formData.contact,
-          description: formData.description
+          contact: formData.phone,
+          description: formData.description || null,
         }]);
 
       if (error) throw error;
 
       setStatus('success');
-      setFormData({ name: '', contact: '', description: '' });
+      setFormData({ name: '', phone: '', description: '' });
       setTimeout(() => setStatus('idle'), 5000);
     } catch (err: any) {
       setStatus('error');
@@ -40,7 +69,7 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5 bg-[#FAF9F6] rounded-[2rem] p-8 lg:p-10 shadow-[0_8px_30px_rgba(44,30,22,0.06)]">
-      {/* Name */}
+      {/* Имя */}
       <div className="space-y-2">
         <label htmlFor="name" className="block text-sm font-medium text-[#3D2B1F] tracking-wide">
           Имя
@@ -57,33 +86,32 @@ export default function ContactForm() {
         />
       </div>
 
-      {/* Contact */}
+      {/* Телефон */}
       <div className="space-y-2">
-        <label htmlFor="contact" className="block text-sm font-medium text-[#3D2B1F] tracking-wide">
-          Telegram / Телефон
+        <label htmlFor="phone" className="block text-sm font-medium text-[#3D2B1F] tracking-wide">
+          Телефон
         </label>
         <input
-          type="text"
-          id="contact"
-          name="contact"
+          type="tel"
+          id="phone"
+          name="phone"
           required
-          value={formData.contact}
-          onChange={handleChange}
+          value={formData.phone}
+          onChange={handlePhoneChange}
+          inputMode="numeric"
           className="w-full px-5 py-4 rounded-2xl bg-white border-0 text-[#3D2B1F] placeholder:text-[#8B7D75] focus:outline-none focus:ring-2 focus:ring-[#A34343]/20 transition-all shadow-[0_4px_20px_rgba(44,30,22,0.04)]"
-          placeholder="Telegram или WhatsApp"
+          placeholder="+7 (707) 000 0000"
         />
       </div>
 
-
-      {/* Description */}
+      {/* Описание проекта (необязательно) */}
       <div className="space-y-2">
         <label htmlFor="description" className="block text-sm font-medium text-[#3D2B1F] tracking-wide">
-          Описание проекта
+          Описание проекта <span className="text-[#8B7D75] font-normal">(необязательно)</span>
         </label>
         <textarea
           id="description"
           name="description"
-          required
           value={formData.description}
           onChange={handleChange}
           rows={4}
@@ -92,7 +120,7 @@ export default function ContactForm() {
         />
       </div>
 
-      {/* Error */}
+      {/* Ошибка */}
       {status === 'error' && (
         <div className="flex items-center gap-3 text-red-700 bg-red-50 border border-red-100 p-4 rounded-2xl">
           <AlertCircle className="w-5 h-5 flex-shrink-0" />
@@ -100,7 +128,7 @@ export default function ContactForm() {
         </div>
       )}
 
-      {/* Success */}
+      {/* Успех */}
       {status === 'success' && (
         <div className="flex items-center gap-3 text-emerald-700 bg-emerald-50 border border-emerald-100 p-4 rounded-2xl">
           <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
@@ -108,7 +136,7 @@ export default function ContactForm() {
         </div>
       )}
 
-      {/* Submit */}
+      {/* Кнопка */}
       <button
         type="submit"
         disabled={status === 'loading' || status === 'success'}
@@ -127,7 +155,7 @@ export default function ContactForm() {
         ) : (
           <>
             <Send className="w-5 h-5" />
-            Отправить запрос
+            Отправить заявку
           </>
         )}
       </button>
@@ -138,3 +166,4 @@ export default function ContactForm() {
     </form>
   );
 }
+

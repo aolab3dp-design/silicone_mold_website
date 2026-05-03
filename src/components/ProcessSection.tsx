@@ -15,7 +15,7 @@ export default function ProcessSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="process" className="py-20 lg:py-24 bg-[#FAF9F6]">
+    <section id="process" className="py-20 lg:py-24 bg-[#F2F1E9]">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="text-center mb-20">
           <p className="text-xs font-medium tracking-[0.2em] text-[#3D2B1F]/80 uppercase mb-6">АЛГОРИТМ РАБОТЫ</p>
@@ -35,7 +35,7 @@ export default function ProcessSection() {
               return (
                 <motion.div key={step.title} initial={{ opacity: 0, x: -30 }} animate={isInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }} className="flex gap-8 items-start">
                   <motion.div initial={{ scale: 0.8 }} animate={isInView ? { scale: 1 } : {}} transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }} className="relative shrink-0">
-                    <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-[0_8px_30px_rgba(44,30,22,0.06)] relative z-10">
+                    <div className="w-20 h-20 rounded-full bg-[#FAF9F6] flex items-center justify-center shadow-[0_8px_30px_rgba(44,30,22,0.06)] relative z-10">
                       <Icon strokeWidth={1.2} className="w-8 h-8 text-[#A34343]" />
                     </div>
                     <div className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-[#A34343] text-white text-xs font-semibold flex items-center justify-center shadow-[0_4px_12px_rgba(163,67,67,0.3)] z-20">
