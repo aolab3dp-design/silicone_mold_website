@@ -15,7 +15,7 @@ export default function ProcessSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="process" className="py-20 lg:py-24 bg-[#F2F1E9]">
+    <section id="process" className="py-20 lg:py-24 bg-[#F6F1E8]">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="text-center mb-20">
           <p className="text-xs font-medium tracking-[0.2em] text-[#3D2B1F]/80 uppercase mb-6">АЛГОРИТМ РАБОТЫ</p>
